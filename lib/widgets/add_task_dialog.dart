@@ -180,25 +180,16 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
         TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),
         ElevatedButton(
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              final newTask = Task(
-                id:
-                    widget.task?.id ??
-                    DateTime.now().millisecondsSinceEpoch.toString(),
-                title: _titleController.text.trim(),
-                description: _descController.text.trim(),
-                categoryId: _selectedCategoryId,
-                isCompleted: widget.task?.isCompleted ?? false,
-                createdAt: widget.task?.createdAt ?? DateTime.now(),
+            if (_formKey.currentState?.validate() ?? false) {
+              taskController.saveTask(
+                existingTask: widget.task,
+                title: _titleController.text,
+                description: _descController.text,
+                categoryId: _selectedCategoryId!,
+                reminder: _reminderDate,
               );
-
-              if (isEdit) {
-                taskController.updateTask(newTask, reminder: _reminderDate);
-              } else {
-                taskController.addTask(newTask, reminder: _reminderDate);
-              }
-              Get.back();
             }
+            Get.back();
           },
           child: Text('save'.tr),
         ),

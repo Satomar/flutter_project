@@ -52,7 +52,44 @@ class TaskListScreen extends StatelessWidget {
                     ...categoryController.categories.map(
                       (cat) => DropdownMenuItem(
                         value: cat.id,
-                        child: Text(cat.name),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 12,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: Color(cat.colorValue),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(cat.name),
+                            const SizedBox(width: 6),
+                            if (categoryController.reminderCountForCategory(
+                                  cat.id,
+                                ) >
+                                0)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  categoryController
+                                      .reminderCountForCategory(cat.id)
+                                      .toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -88,14 +125,45 @@ class TaskListScreen extends StatelessWidget {
                               child: Text(
                                 task.title,
                                 style: TextStyle(
-                                  decoration:
-                                  task.isCompleted ? TextDecoration.lineThrough : null,
+                                  decoration: task.isCompleted
+                                      ? TextDecoration.lineThrough
+                                      : null,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
                             if (task.reminderAt != null && !task.isCompleted)
-                              const Icon(Icons.alarm, size: 18),
+                              GestureDetector(
+                                onLongPress: () {
+                                  taskController.snoozeTask(
+                                    task.id,
+                                    const Duration(minutes: 10),
+                                  );
+                                  Get.snackbar(
+                                    'Snoozed',
+                                    'Reminder in 10 minutes',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                  );
+                                },
+                                child: const Icon(Icons.alarm, size: 18),
+                              ),
+                          ],
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (task.description.isNotEmpty)
+                              Text(task.description, maxLines: 2),
+                            if (task.reminderAt != null &&
+                                task.reminderAt!.isBefore(DateTime.now()) &&
+                                !task.isCompleted)
+                              const Text(
+                                'Missed reminder',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12,
+                                ),
+                              ),
                           ],
                         ),
                         trailing: PopupMenuButton(
@@ -124,9 +192,7 @@ class TaskListScreen extends StatelessWidget {
       ),
       floatingActionButton: GetBuilder<TaskController>(
         builder: (controller) => FloatingActionButton.extended(
-          onPressed: () => Get.dialog(
-            const AddTaskDialog(),
-          ),
+          onPressed: () => Get.dialog(const AddTaskDialog()),
           isExtended: controller.extendFab,
           icon: const Icon(Icons.add),
           label: Text('add'.tr),

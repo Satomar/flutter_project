@@ -1,6 +1,6 @@
+import 'package:flutter_project/controllers/task_controller.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-
 import '../helpera/constants.dart';
 import '../models/category.dart';
 
@@ -43,6 +43,18 @@ class CategoryController extends GetxController {
       'Category deleted',
       snackPosition: SnackPosition.BOTTOM,
     );
+  }
+
+  int reminderCountForCategory(String? categoryId) {
+    final taskController = Get.find<TaskController>();
+    return taskController.tasks
+        .where(
+          (t) =>
+              t.categoryId == categoryId &&
+              t.reminderAt != null &&
+              !t.isCompleted,
+        )
+        .length;
   }
 
   Category? getCategory(String id) => categoryBox.get(id);
