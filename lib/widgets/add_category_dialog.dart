@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/category_controller.dart';
-import '../helpera/themes.dart';
+import '../helpers/themes.dart';
 import '../models/category.dart';
 
 class AddCategoryDialog extends StatefulWidget {
@@ -68,9 +68,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   name: _nameController.text.trim(),
                   colorValue:
-                      categoryColors[DateTime.now().second %
-                              categoryColors.length]
-                          .value,
+                      categoryColors[DateTime.now().second % categoryColors.length].toARGB32(),
                 );
                 controller.addCategory(newCategory);
                 widget.onCategoryAdded?.call(newCategory.id);

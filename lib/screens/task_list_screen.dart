@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../controllers/category_controller.dart';
 import '../controllers/task_controller.dart';
-import '../helpera/routes.dart';
+import '../helpers/routes.dart';
 import '../widgets/add_task_dialog.dart';
 
 class TaskListScreen extends StatelessWidget {

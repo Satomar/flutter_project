@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import '../helpera/constants.dart';
+import '../helpers/constants.dart';
 import '../models/task.dart';
 import '../services/notification_service.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter_project/controllers/task_controller.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import '../helpera/constants.dart';
+import '../helpers/constants.dart';
 import '../models/category.dart';
 
 class CategoryController extends GetxController {

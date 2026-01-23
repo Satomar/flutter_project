@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../helpera/constants.dart';
-import '../helpera/routes.dart';
-import '../helpera/themes.dart';
+import '../helpers/constants.dart';
+import '../helpers/routes.dart';
+import '../helpers/themes.dart';
 import '../models/user_model.dart';
 import '../services/api/dio_client.dart';
 

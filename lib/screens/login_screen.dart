@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/locale_controller.dart';
 import '../controllers/theme_controller.dart';
-import '../helpera/constants.dart';
-import '../helpera/themes.dart';
+import '../helpers/constants.dart';
+import '../helpers/themes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -85,7 +85,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 120,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        color: Theme.of(
+                          context,
+                        ).primaryColor.withValues(alpha: 0.1),
                       ),
                       child: Icon(
                         Icons.check_circle_outline,
@@ -115,15 +117,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Inputs Card
                     Card(
                       elevation: 0,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .surfaceContainerHighest
+                          .withValues(alpha: 0.3),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: BorderSide(
                           color: Theme.of(
                             context,
-                          ).colorScheme.outline.withOpacity(0.1),
+                          ).colorScheme.outline.withValues(alpha: 0.1),
                         ),
                       ),
                       child: Padding(

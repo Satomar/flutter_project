@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/locale_controller.dart';
 import '../controllers/theme_controller.dart';
-import '../helpera/themes.dart';
+import '../helpers/themes.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../controllers/category_controller.dart';
 import '../controllers/task_controller.dart';
-import '../helpera/themes.dart';
+import '../helpers/themes.dart';
 import '../widgets/add_category_dialog.dart';
 
 class CategoryListScreen extends StatelessWidget {

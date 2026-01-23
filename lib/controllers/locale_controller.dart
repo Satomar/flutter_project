@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import '../helpera/constants.dart';
+import '../helpers/constants.dart';
 
 class LocaleController extends GetxController {
   final locale = const Locale('en', 'US').obs;

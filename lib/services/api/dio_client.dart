@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../helpera/constants.dart';
+import '../../helpers/constants.dart';
 
 class DioClient {
   static final DioClient _instance = DioClient._internal();

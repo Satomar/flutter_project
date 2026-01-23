@@ -7,11 +7,11 @@ import 'models/category.dart';
 import 'controllers/theme_controller.dart';
 import 'controllers/locale_controller.dart';
 import 'controllers/auth_controller.dart';
-import 'helpera/themes.dart';
-import 'helpera/translations.dart';
-import 'helpera/routes.dart';
-import 'helpera/app_pages.dart';
-import 'helpera/constants.dart';
+import 'helpers/themes.dart';
+import 'helpers/translations.dart';
+import 'helpers/routes.dart';
+import 'helpers/app_pages.dart';
+import 'helpers/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
