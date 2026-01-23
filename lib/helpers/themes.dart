@@ -39,8 +39,8 @@ class AppColors {
   static final textSubtleDark = Colors.grey[600];
 
   // Backgrounds
-  static final errorContainer = Colors.red.withOpacity(0.1);
-  static final successContainer = Colors.green.withOpacity(0.1);
+  static final errorContainer = Colors.red.withValues(alpha: 0.1);
+  static final successContainer = Colors.green.withValues(alpha: 0.1);
 }
 
 const categoryColors = [
