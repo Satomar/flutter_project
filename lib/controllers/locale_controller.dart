@@ -12,10 +12,13 @@ class LocaleController extends GetxController {
   void onInit() {
     super.onInit();
     settingsBox = Hive.box(AppConstants.boxSettings);
-    final savedLang =
-        settingsBox.get(AppConstants.keyLanguage, defaultValue: 'en');
-    locale.value =
-        savedLang == 'ar' ? const Locale('ar', 'SA') : const Locale('en', 'US');
+    final savedLang = settingsBox.get(
+      AppConstants.keyLanguage,
+      defaultValue: 'en',
+    );
+    locale.value = savedLang == 'ar'
+        ? const Locale('ar', 'SA')
+        : const Locale('en', 'US');
   }
 
   void changeToEnglish() {

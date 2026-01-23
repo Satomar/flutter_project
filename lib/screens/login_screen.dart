@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/auth_controller.dart';
-import '../controllers/theme_controller.dart';
 import '../controllers/locale_controller.dart';
+import '../controllers/theme_controller.dart';
 import '../helpera/constants.dart';
 import '../helpera/themes.dart';
 
@@ -14,10 +15,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController usernameController =
-      TextEditingController(text: AppConstants.demoUsername);
-  final TextEditingController passwordController =
-      TextEditingController(text: AppConstants.demoPassword);
+  final TextEditingController usernameController = TextEditingController(
+    text: AppConstants.demoUsername,
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: AppConstants.demoPassword,
+  );
 
   bool _isObscure = true;
 
@@ -37,29 +40,36 @@ class _LoginScreenState extends State<LoginScreen> {
               right: 16,
               child: Row(
                 children: [
-                  Obx(() => IconButton(
-                        icon: Icon(themeController.isDark.value
+                  Obx(
+                    () => IconButton(
+                      icon: Icon(
+                        themeController.isDark.value
                             ? Icons.light_mode
-                            : Icons.dark_mode),
-                        onPressed: () => themeController.toggleTheme(),
-                      )),
+                            : Icons.dark_mode,
+                      ),
+                      onPressed: () => themeController.toggleTheme(),
+                    ),
+                  ),
                   const SizedBox(width: 8),
-                  Obx(() => DropdownButton<String>(
-                        value: localeController.locale.value.languageCode,
-                        underline: Container(), // Remove underline
-                        icon: const Icon(Icons.language),
-                        items: const [
-                          DropdownMenuItem(value: 'en', child: Text('EN')),
-                          DropdownMenuItem(value: 'ar', child: Text('AR')),
-                        ],
-                        onChanged: (val) {
-                          if (val == 'en') {
-                            localeController.changeToEnglish();
-                          } else {
-                            localeController.changeToArabic();
-                          }
-                        },
-                      )),
+                  Obx(
+                    () => DropdownButton<String>(
+                      value: localeController.locale.value.languageCode,
+                      underline: Container(),
+                      // Remove underline
+                      icon: const Icon(Icons.language),
+                      items: const [
+                        DropdownMenuItem(value: 'en', child: Text('EN')),
+                        DropdownMenuItem(value: 'ar', child: Text('AR')),
+                      ],
+                      onChanged: (val) {
+                        if (val == 'en') {
+                          localeController.changeToEnglish();
+                        } else {
+                          localeController.changeToArabic();
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -90,35 +100,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'welcome_back'.tr,
                       textAlign: TextAlign.center,
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'login_subtitle'.tr,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppColors.textSubtle,
-                          ),
+                        color: AppColors.textSubtle,
+                      ),
                     ),
                     const SizedBox(height: 48),
 
                     // Inputs Card
                     Card(
                       elevation: 0,
-                      color: Theme.of(context)
-                          .colorScheme
-                          .surfaceContainerHighest
-                          .withOpacity(0.3),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.surfaceContainerHighest.withOpacity(0.3),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .outline
-                              .withOpacity(0.1),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.outline.withOpacity(0.1),
                         ),
                       ),
                       child: Padding(
@@ -147,9 +153,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 hintText: 'password_hint'.tr,
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
-                                  icon: Icon(_isObscure
-                                      ? Icons.visibility_off
-                                      : Icons.visibility),
+                                  icon: Icon(
+                                    _isObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                  ),
                                   onPressed: () {
                                     setState(() {
                                       _isObscure = !_isObscure;
@@ -172,40 +180,42 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 32),
 
                     // Login Button
-                    Obx(() => SizedBox(
-                          height: 56,
-                          child: FilledButton(
-                            onPressed: authController.isLoading.value
-                                ? null
-                                : () {
-                                    authController.login(
-                                      usernameController.text.trim(),
-                                      passwordController.text.trim(),
-                                    );
-                                  },
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
+                    Obx(
+                      () => SizedBox(
+                        height: 56,
+                        child: FilledButton(
+                          onPressed: authController.isLoading.value
+                              ? null
+                              : () {
+                                  authController.login(
+                                    usernameController.text.trim(),
+                                    passwordController.text.trim(),
+                                  );
+                                },
+                          style: FilledButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
                             ),
-                            child: authController.isLoading.value
-                                ? const SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: AppColors.white,
-                                    ),
-                                  )
-                                : Text(
-                                    'login'.tr,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
                           ),
-                        )),
+                          child: authController.isLoading.value
+                              ? const SizedBox(
+                                  height: 24,
+                                  width: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.white,
+                                  ),
+                                )
+                              : Text(
+                                  'login'.tr,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

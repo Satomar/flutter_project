@@ -13,9 +13,5 @@ class Category extends HiveObject {
   @HiveField(2)
   int colorValue;
 
-  Category({
-    required this.id,
-    required this.name,
-    required this.colorValue,
-  });
+  Category({required this.id, required this.name, required this.colorValue});
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/auth_controller.dart';
 import '../helpera/routes.dart';
 
@@ -45,9 +46,9 @@ class _SplashScreenState extends State<SplashScreen> {
             Text(
               'Hive Todo App',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
             const SizedBox(height: 20),
             const CircularProgressIndicator(),

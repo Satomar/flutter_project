@@ -23,8 +23,10 @@ class CategoryListScreen extends StatelessWidget {
                 children: [
                   Icon(Icons.category, size: 64, color: AppColors.iconSubtle),
                   const SizedBox(height: 16),
-                  Text('no_categories'.tr,
-                      style: TextStyle(color: AppColors.textSubtleDark)),
+                  Text(
+                    'no_categories'.tr,
+                    style: TextStyle(color: AppColors.textSubtleDark),
+                  ),
                 ],
               ),
             );
@@ -63,8 +65,10 @@ class CategoryListScreen extends StatelessWidget {
                         ),
                       ),
                       PopupMenuItem(
-                        child: Text('delete'.tr,
-                            style: const TextStyle(color: AppColors.error)),
+                        child: Text(
+                          'delete'.tr,
+                          style: const TextStyle(color: AppColors.error),
+                        ),
                         onTap: () => Future.delayed(
                           const Duration(milliseconds: 100),
                           () => _deleteCategory(category.id),
@@ -104,8 +108,10 @@ class CategoryListScreen extends StatelessWidget {
               Get.find<CategoryController>().deleteCategory(id);
               Get.back();
             },
-            child: Text('delete'.tr,
-                style: const TextStyle(color: AppColors.error)),
+            child: Text(
+              'delete'.tr,
+              style: const TextStyle(color: AppColors.error),
+            ),
           ),
         ],
       ),

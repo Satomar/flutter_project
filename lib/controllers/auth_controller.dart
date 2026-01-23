@@ -1,11 +1,13 @@
 import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../helpera/constants.dart';
+import '../helpera/routes.dart';
+import '../helpera/themes.dart';
 import '../models/user_model.dart';
 import '../services/api/dio_client.dart';
-import '../helpera/routes.dart';
-import '../helpera/constants.dart';
-import '../helpera/themes.dart';
 
 class AuthController extends GetxController {
   final _dioClient = DioClient();
@@ -36,12 +38,9 @@ class AuthController extends GetxController {
       isLoading.value = true;
       final response = await _dioClient.post(
         AppConstants.loginEndpoint,
-        data: {
-          'username': username,
-          'password': password,
-        },
+        data: {'username': username, 'password': password},
       );
-     // print(response);
+      // print(response);
       if (response.statusCode == 200) {
         final token = response.data[AppConstants.keyToken];
         if (token != null) {
@@ -49,21 +48,29 @@ class AuthController extends GetxController {
 
           final user = UserModel.fromJson(response.data);
           await _settingsBox.put(
-              AppConstants.keyUser, jsonEncode(user.toJson()));
+            AppConstants.keyUser,
+            jsonEncode(user.toJson()),
+          );
           currentUser.value = user;
 
           Get.offAllNamed(AppRoutes.MAIN);
-          Get.snackbar('Success', 'Logged in successfully',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: AppColors.successContainer,
-              colorText: AppColors.success);
+          Get.snackbar(
+            'Success',
+            'Logged in successfully',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: AppColors.successContainer,
+            colorText: AppColors.success,
+          );
         }
       }
     } catch (e) {
-      Get.snackbar('Error', 'Login failed: ${e.toString()}',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppColors.errorContainer,
-          colorText: AppColors.error);
+      Get.snackbar(
+        'Error',
+        'Login failed: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.errorContainer,
+        colorText: AppColors.error,
+      );
     } finally {
       isLoading.value = false;
     }

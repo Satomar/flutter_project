@@ -1,23 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import '../../helpera/constants.dart';
 
 class DioClient {
   static final DioClient _instance = DioClient._internal();
   late final Dio _dio;
+
   factory DioClient() {
     return _instance;
   }
+
   DioClient._internal() {
     _dio = Dio(
       BaseOptions(
         baseUrl: AppConstants.apiBaseUrl,
         connectTimeout: const Duration(seconds: AppConstants.apiConnectTimeout),
         receiveTimeout: const Duration(seconds: AppConstants.apiReceiveTimeout),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': '*/*'
-        },
+        headers: {'Content-Type': 'application/json', 'Accept': '*/*'},
       ),
     );
 
@@ -41,8 +41,10 @@ class DioClient {
     );
   }
 
-  Future<Response> get(String path,
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     return await _dio.get(path, queryParameters: queryParameters);
   }
 

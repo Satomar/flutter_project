@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/services/notification_service.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'models/task.dart';
@@ -23,6 +24,7 @@ void main() async {
   await Hive.openBox<Task>(AppConstants.boxTasks);
   await Hive.openBox<Category>(AppConstants.boxCategories);
   await Hive.openBox(AppConstants.boxSettings);
+  await NotificationService().init();
 
   runApp(const MyApp());
 }
@@ -36,17 +38,19 @@ class MyApp extends StatelessWidget {
     Get.put(LocaleController());
     Get.put(AuthController());
 
-    return Obx(() => GetMaterialApp(
-          title: 'Todo App',
-          debugShowCheckedModeBanner: false,
-          theme: AppThemes.light,
-          darkTheme: AppThemes.dark,
-          themeMode: Get.find<ThemeController>().themeMode,
-          translations: AppTranslations(),
-          locale: Get.find<LocaleController>().locale.value,
-          fallbackLocale: const Locale('en', 'US'),
-          initialRoute: AppRoutes.SPLASH,
-          getPages: AppPages.pages,
-        ));
+    return Obx(
+      () => GetMaterialApp(
+        title: 'Todo App',
+        debugShowCheckedModeBanner: false,
+        theme: AppThemes.light,
+        darkTheme: AppThemes.dark,
+        themeMode: Get.find<ThemeController>().themeMode,
+        translations: AppTranslations(),
+        locale: Get.find<LocaleController>().locale.value,
+        fallbackLocale: const Locale('en', 'US'),
+        initialRoute: AppRoutes.SPLASH,
+        getPages: AppPages.pages,
+      ),
+    );
   }
 }

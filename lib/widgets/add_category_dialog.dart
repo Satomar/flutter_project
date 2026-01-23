@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/category_controller.dart';
-import '../models/category.dart';
 import '../helpera/themes.dart';
+import '../models/category.dart';
 
 class AddCategoryDialog extends StatefulWidget {
   final Category? category;
@@ -49,10 +50,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Get.back(),
-          child: Text('cancel'.tr),
-        ),
+        TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
@@ -69,9 +67,10 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                 final newCategory = Category(
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   name: _nameController.text.trim(),
-                  colorValue: categoryColors[
-                          DateTime.now().second % categoryColors.length]
-                      .value,
+                  colorValue:
+                      categoryColors[DateTime.now().second %
+                              categoryColors.length]
+                          .value,
                 );
                 controller.addCategory(newCategory);
                 widget.onCategoryAdded?.call(newCategory.id);

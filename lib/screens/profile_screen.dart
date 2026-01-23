@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/auth_controller.dart';
-import '../controllers/theme_controller.dart';
 import '../controllers/locale_controller.dart';
+import '../controllers/theme_controller.dart';
 import '../helpera/themes.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -43,36 +44,40 @@ class ProfileScreen extends StatelessWidget {
             Center(
               child: Text(
                 user.email,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.textSubtle,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: AppColors.textSubtle),
               ),
             ),
             const SizedBox(height: 32),
             const Divider(),
             ListTile(
               title: Text('theme'.tr),
-              trailing: Obx(() => Switch(
-                    value: themeController.isDark.value,
-                    onChanged: (_) => themeController.toggleTheme(),
-                  )),
+              trailing: Obx(
+                () => Switch(
+                  value: themeController.isDark.value,
+                  onChanged: (_) => themeController.toggleTheme(),
+                ),
+              ),
             ),
             ListTile(
               title: Text('language'.tr),
-              trailing: Obx(() => DropdownButton<String>(
-                    value: localeController.locale.value.languageCode,
-                    items: const [
-                      DropdownMenuItem(value: 'en', child: Text('English')),
-                      DropdownMenuItem(value: 'ar', child: Text('العربية')),
-                    ],
-                    onChanged: (val) {
-                      if (val == 'en') {
-                        localeController.changeToEnglish();
-                      } else {
-                        localeController.changeToArabic();
-                      }
-                    },
-                  )),
+              trailing: Obx(
+                () => DropdownButton<String>(
+                  value: localeController.locale.value.languageCode,
+                  items: const [
+                    DropdownMenuItem(value: 'en', child: Text('English')),
+                    DropdownMenuItem(value: 'ar', child: Text('العربية')),
+                  ],
+                  onChanged: (val) {
+                    if (val == 'en') {
+                      localeController.changeToEnglish();
+                    } else {
+                      localeController.changeToArabic();
+                    }
+                  },
+                ),
+              ),
             ),
             const Divider(),
             const SizedBox(height: 16),

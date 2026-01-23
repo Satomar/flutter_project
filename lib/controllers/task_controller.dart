@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import '../models/task.dart';
 
 import '../helpera/constants.dart';
+import '../models/task.dart';
+import '../services/notification_service.dart';
 
 class TaskController extends GetxController {
   late Box<Task> taskBox;
   String? selectedCategoryId;
+  bool extendFab = true;
 
   @override
   void onInit() {
@@ -25,27 +27,56 @@ class TaskController extends GetxController {
 
   List<Task> get completedTasks =>
       filteredTasks.where((t) => t.isCompleted).toList();
+
   List<Task> get pendingTasks =>
       filteredTasks.where((t) => !t.isCompleted).toList();
 
-  void addTask(Task task) {
+  void setExtendFab(bool value) {
+    extendFab = value;
+    update();
+  }
+
+  void addTask(Task task, {DateTime? reminder}) {
     taskBox.put(task.id, task);
+    if (reminder != null) {
+      NotificationService().scheduleNotification(
+        id: task.id.hashCode,
+        title: 'Task Reminder',
+        body: task.title,
+        scheduledDate: reminder,
+      );
+    }
     update();
     Get.snackbar('Success', 'Task added', snackPosition: SnackPosition.BOTTOM);
   }
 
-  void updateTask(Task task) {
+  void updateTask(Task task, {DateTime? reminder}) {
     taskBox.put(task.id, task);
+    if (reminder != null) {
+      NotificationService().scheduleNotification(
+        id: task.id.hashCode,
+        title: 'Task Reminder',
+        body: task.title,
+        scheduledDate: reminder,
+      );
+    }
     update();
-    Get.snackbar('Success', 'Task updated',
-        snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      'Success',
+      'Task updated',
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 
   void deleteTask(String id) {
     taskBox.delete(id);
+    NotificationService().cancelNotification(id.hashCode);
     update();
-    Get.snackbar('Success', 'Task deleted',
-        snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      'Success',
+      'Task deleted',
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 
   void toggleComplete(String id) {

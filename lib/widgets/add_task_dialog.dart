@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/task_controller.dart';
+
 import '../controllers/category_controller.dart';
-import '../models/task.dart';
+import '../controllers/task_controller.dart';
 import '../helpera/themes.dart';
+import '../models/task.dart';
 import 'add_category_dialog.dart';
 
 class AddTaskDialog extends StatefulWidget {
   final Task? task;
+
   const AddTaskDialog({super.key, this.task});
 
   @override
@@ -19,6 +21,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
   final _titleController = TextEditingController();
   final _descController = TextEditingController();
   String? _selectedCategoryId;
+  DateTime? _reminderDate;
 
   @override
   void initState() {
@@ -70,35 +73,42 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     value: null,
                     child: Text('No Category'),
                   ),
-                  ...categoryController.categories
-                      .map((cat) => DropdownMenuItem(
-                            value: cat.id,
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 12,
-                                  height: 12,
-                                  decoration: BoxDecoration(
-                                    color: Color(cat.colorValue),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(cat.name),
-                              ],
+                  ...categoryController.categories.map(
+                    (cat) => DropdownMenuItem(
+                      value: cat.id,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              color: Color(cat.colorValue),
+                              shape: BoxShape.circle,
                             ),
-                          )),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(cat.name),
+                        ],
+                      ),
+                    ),
+                  ),
                   const DropdownMenuItem<String>(
                     value: 'add_new_category_option',
                     child: Row(
                       children: [
-                        Icon(Icons.add_circle_outline,
-                            color: AppColors.info, size: 20),
+                        Icon(
+                          Icons.add_circle_outline,
+                          color: AppColors.info,
+                          size: 20,
+                        ),
                         SizedBox(width: 8),
-                        Text('Add New Category',
-                            style: TextStyle(
-                                color: AppColors.info,
-                                fontWeight: FontWeight.bold)),
+                        Text(
+                          'Add New Category',
+                          style: TextStyle(
+                            color: AppColors.info,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -138,14 +148,38 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Get.back(),
-          child: Text('cancel'.tr),
+          onPressed: () async {
+            final date = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime.now().add(const Duration(days: 365)),
+            );
+            if (date == null) return;
+            final time = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.now(),
+            );
+            if (time == null) return;
+            setState(() {
+              _reminderDate = DateTime(
+                date.year,
+                date.month,
+                date.day,
+                time.hour,
+                time.minute,
+              );
+            });
+          },
+          child: const Text('Add Reminder'),
         ),
+        TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               final newTask = Task(
-                id: widget.task?.id ??
+                id:
+                    widget.task?.id ??
                     DateTime.now().millisecondsSinceEpoch.toString(),
                 title: _titleController.text.trim(),
                 description: _descController.text.trim(),
@@ -155,9 +189,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               );
 
               if (isEdit) {
-                taskController.updateTask(newTask);
+                taskController.updateTask(newTask, reminder: _reminderDate);
               } else {
-                taskController.addTask(newTask);
+                taskController.addTask(newTask, reminder: _reminderDate);
               }
               Get.back();
             }
