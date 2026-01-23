@@ -82,7 +82,22 @@ class TaskListScreen extends StatelessWidget {
                           onChanged: (_) =>
                               taskController.toggleComplete(task.id),
                         ),
-                        title: Text(task.title),
+                        title: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                task.title,
+                                style: TextStyle(
+                                  decoration:
+                                  task.isCompleted ? TextDecoration.lineThrough : null,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            if (task.reminderAt != null && !task.isCompleted)
+                              const Icon(Icons.alarm, size: 18),
+                          ],
+                        ),
                         trailing: PopupMenuButton(
                           itemBuilder: (_) => [
                             PopupMenuItem(
@@ -114,7 +129,7 @@ class TaskListScreen extends StatelessWidget {
           ),
           isExtended: controller.extendFab,
           icon: const Icon(Icons.add),
-          label: const Text('Add'),
+          label: Text('add'.tr),
         ),
       ),
     );

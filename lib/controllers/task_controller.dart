@@ -37,6 +37,7 @@ class TaskController extends GetxController {
   }
 
   void addTask(Task task, {DateTime? reminder}) {
+    task.reminderAt = reminder;
     taskBox.put(task.id, task);
     if (reminder != null) {
       NotificationService().scheduleNotification(
@@ -47,11 +48,13 @@ class TaskController extends GetxController {
       );
     }
     update();
-    Get.snackbar('Success', 'Task added', snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar('Success', 'Task added',
+        snackPosition: SnackPosition.BOTTOM);
   }
 
   void updateTask(Task task, {DateTime? reminder}) {
-    taskBox.put(task.id, task);
+    task.reminderAt = reminder;
+    NotificationService().cancelNotification(task.id.hashCode);
     if (reminder != null) {
       NotificationService().scheduleNotification(
         id: task.id.hashCode,
@@ -60,12 +63,10 @@ class TaskController extends GetxController {
         scheduledDate: reminder,
       );
     }
+    taskBox.put(task.id, task);
     update();
-    Get.snackbar(
-      'Success',
-      'Task updated',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    Get.snackbar('Success', 'Task updated',
+        snackPosition: SnackPosition.BOTTOM);
   }
 
   void deleteTask(String id) {
@@ -83,10 +84,21 @@ class TaskController extends GetxController {
     final task = taskBox.get(id);
     if (task != null) {
       task.isCompleted = !task.isCompleted;
+      if (task.isCompleted) {
+        NotificationService().cancelNotification(id.hashCode);
+      } else if (task.reminderAt != null) {
+        NotificationService().scheduleNotification(
+          id: id.hashCode,
+          title: 'Task Reminder',
+          body: task.title,
+          scheduledDate: task.reminderAt!,
+        );
+      }
       task.save();
       update();
     }
   }
+
 
   void setFilter(String? categoryId) {
     selectedCategoryId = categoryId;

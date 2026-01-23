@@ -22,6 +22,9 @@ class Task extends HiveObject {
   @HiveField(5)
   DateTime createdAt;
 
+  @HiveField(6)
+  DateTime? reminderAt;
+
   Task({
     required this.id,
     required this.title,
@@ -29,5 +32,6 @@ class Task extends HiveObject {
     this.categoryId,
     this.isCompleted = false,
     required this.createdAt,
+    this.reminderAt,
   });
 }

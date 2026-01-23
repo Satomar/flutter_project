@@ -30,6 +30,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
       _titleController.text = widget.task!.title;
       _descController.text = widget.task!.description;
       _selectedCategoryId = widget.task!.categoryId;
+      _reminderDate = widget.task!.reminderAt;
     }
   }
 
@@ -151,14 +152,15 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
           onPressed: () async {
             final date = await showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
+              initialDate: _reminderDate ?? DateTime.now(),
               firstDate: DateTime.now(),
               lastDate: DateTime.now().add(const Duration(days: 365)),
             );
             if (date == null) return;
             final time = await showTimePicker(
               context: context,
-              initialTime: TimeOfDay.now(),
+              initialTime: TimeOfDay.fromDateTime(
+                  _reminderDate ?? DateTime.now()),
             );
             if (time == null) return;
             setState(() {
@@ -171,7 +173,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               );
             });
           },
-          child: const Text('Add Reminder'),
+          child: Text(
+            _reminderDate == null ? 'Add Reminder' : 'Edit Reminder',
+          ),
         ),
         TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),
         ElevatedButton(
