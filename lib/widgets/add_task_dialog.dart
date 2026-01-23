@@ -105,7 +105,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 ];
 
                 return DropdownButtonFormField<String?>(
-                  value: _selectedCategoryId,
+                  initialValue: _selectedCategoryId,
                   decoration: InputDecoration(
                     labelText: 'category'.tr,
                     border: const OutlineInputBorder(),

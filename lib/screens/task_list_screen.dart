@@ -32,7 +32,7 @@ class TaskListScreen extends StatelessWidget {
             child: GetBuilder<TaskController>(
               builder: (controller) => GetBuilder<CategoryController>(
                 builder: (_) => DropdownButtonFormField<String?>(
-                  value: controller.selectedCategoryId,
+                  initialValue: controller.selectedCategoryId,
                   decoration: InputDecoration(
                     labelText: 'category'.tr,
                     border: const OutlineInputBorder(),

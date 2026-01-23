@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       elevation: 0,
                       color: Theme.of(context)
                           .colorScheme
-                          .surfaceVariant
+                          .surfaceContainerHighest
                           .withOpacity(0.3),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
