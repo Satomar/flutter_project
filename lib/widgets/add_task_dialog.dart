@@ -179,7 +179,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
         ),
         TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState?.validate() ?? false) {
               taskController.saveTask(
                 existingTask: widget.task,
@@ -188,8 +188,8 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 categoryId: _selectedCategoryId!,
                 reminder: _reminderDate,
               );
+              Get.close(1);
             }
-            Get.back();
           },
           child: Text('save'.tr),
         ),

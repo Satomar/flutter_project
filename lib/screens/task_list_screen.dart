@@ -145,7 +145,13 @@ class TaskListScreen extends StatelessWidget {
                                     snackPosition: SnackPosition.BOTTOM,
                                   );
                                 },
-                                child: const Icon(Icons.alarm, size: 18),
+                                child: Icon(
+                                  Icons.alarm,
+                                  size: 18,
+                                  color: task.reminderAt!.isBefore(DateTime.now())
+                                      ? Colors.red
+                                      : Colors.grey,
+                                ),
                               ),
                           ],
                         ),

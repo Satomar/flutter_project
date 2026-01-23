@@ -28,9 +28,22 @@ class TaskController extends GetxController {
     }
 
     list.sort((a, b) {
+      final now = DateTime.now();
+
+      final aMissed = a.reminderAt != null &&
+          a.reminderAt!.isBefore(now) &&
+          !a.isCompleted;
+      final bMissed = b.reminderAt != null &&
+          b.reminderAt!.isBefore(now) &&
+          !b.isCompleted;
+
+      if (aMissed && !bMissed) return -1;
+      if (!aMissed && bMissed) return 1;
+
       if (a.reminderAt == null && b.reminderAt == null) return 0;
       if (a.reminderAt == null) return 1;
       if (b.reminderAt == null) return -1;
+
       return a.reminderAt!.compareTo(b.reminderAt!);
     });
 
@@ -96,21 +109,17 @@ class TaskController extends GetxController {
 
   void toggleComplete(String id) {
     final task = taskBox.get(id);
-    if (task != null) {
-      task.isCompleted = !task.isCompleted;
-      if (task.isCompleted) {
-        NotificationService().cancelNotification(id.hashCode);
-      } else if (task.reminderAt != null) {
-        NotificationService().scheduleNotification(
-          id: id.hashCode,
-          title: 'Task Reminder',
-          body: task.title,
-          scheduledDate: task.reminderAt!,
-        );
-      }
-      task.save();
-      update();
+    if (task == null) return;
+
+    task.isCompleted = !task.isCompleted;
+
+    if (task.isCompleted && task.reminderAt != null) {
+      NotificationService().cancelNotification(task.id.hashCode);
+      task.reminderAt = null;
     }
+
+    task.save();
+    update();
   }
 
   void setFilter(String? categoryId) {
@@ -118,13 +127,13 @@ class TaskController extends GetxController {
     update();
   }
 
-  void saveTask({
+  Future<void> saveTask({
     Task? existingTask,
     required String title,
     required String description,
     required String categoryId,
     DateTime? reminder,
-  }) {
+  }) async {
     final taskToSave = Task(
       id: existingTask?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       title: title.trim(),
