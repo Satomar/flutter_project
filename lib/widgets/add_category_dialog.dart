@@ -75,7 +75,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                 controller.addCategory(newCategory);
                 widget.onCategoryAdded?.call(newCategory.id);
               }
-              Get.back();
+              Get.close(1);
             }
           },
           child: Text('save'.tr),

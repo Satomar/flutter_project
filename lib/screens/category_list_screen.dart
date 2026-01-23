@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/category_controller.dart';
 import '../controllers/task_controller.dart';
 import '../helpera/themes.dart';
@@ -106,7 +107,7 @@ class CategoryListScreen extends StatelessWidget {
                 }
               }
               Get.find<CategoryController>().deleteCategory(id);
-              Get.back();
+              Get.close(1);
             },
             child: Text(
               'delete'.tr,

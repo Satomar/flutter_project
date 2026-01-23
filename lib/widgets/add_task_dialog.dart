@@ -70,9 +70,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             GetBuilder<CategoryController>(
               builder: (_) {
                 final items = [
-                  const DropdownMenuItem<String>(
+                  DropdownMenuItem<String>(
                     value: null,
-                    child: Text('No Category'),
+                    child: Text('no_category'.tr),
                   ),
                   ...categoryController.categories.map(
                     (cat) => DropdownMenuItem(
@@ -93,19 +93,19 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                       ),
                     ),
                   ),
-                  const DropdownMenuItem<String>(
+                  DropdownMenuItem<String>(
                     value: 'add_new_category_option',
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.add_circle_outline,
                           color: AppColors.info,
                           size: 20,
                         ),
                         SizedBox(width: 8),
                         Text(
-                          'Add New Category',
-                          style: TextStyle(
+                          'add_new_category'.tr,
+                          style: const TextStyle(
                             color: AppColors.info,
                             fontWeight: FontWeight.bold,
                           ),
@@ -160,7 +160,8 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             final time = await showTimePicker(
               context: context,
               initialTime: TimeOfDay.fromDateTime(
-                  _reminderDate ?? DateTime.now()),
+                _reminderDate ?? DateTime.now(),
+              ),
             );
             if (time == null) return;
             setState(() {
@@ -174,7 +175,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             });
           },
           child: Text(
-            _reminderDate == null ? 'Add Reminder' : 'Edit Reminder',
+            _reminderDate == null ? 'add_reminder'.tr : 'edit_reminder'.tr,
           ),
         ),
         TextButton(onPressed: () => Get.back(), child: Text('cancel'.tr)),

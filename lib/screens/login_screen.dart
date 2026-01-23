@@ -50,7 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () => themeController.toggleTheme(),
                     ),
                   ),
-                  const SizedBox(width: 8),
                   Obx(
                     () => DropdownButton<String>(
                       value: localeController.locale.value.languageCode,

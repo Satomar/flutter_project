@@ -18,6 +18,7 @@ class AppTranslations extends Translations {
       'edit':'Edit',
       'categories': 'Categories',
       'add_category': 'Add Category',
+      'add_new_category': 'Add New Category',
       'edit_category': 'Edit Category',
       'name': 'Name',
       'color': 'Color',
@@ -44,6 +45,9 @@ class AppTranslations extends Translations {
       'password': 'Password',
       'username_hint': 'Enter your username',
       'password_hint': 'Enter your password',
+      'add_reminder' : 'Add Reminder',
+      'edit_reminder' : 'Edit Reminder',
+      'missed_reminder':'Missed Reminder'
     },
     'ar_SA': {
       'tasks': 'المهام',
@@ -60,6 +64,7 @@ class AppTranslations extends Translations {
       'edit':'تعديل',
       'categories': 'الفئات',
       'add_category': 'إضافة فئة',
+      'add_new_category': 'إضافة فئة جديدة',
       'edit_category': 'تعديل الفئة',
       'name': 'الاسم',
       'color': 'اللون',
@@ -86,6 +91,9 @@ class AppTranslations extends Translations {
       'password': 'كلمة المرور',
       'username_hint': 'أدخل اسم المستخدم',
       'password_hint': 'أدخل كلمة المرور',
+      'add_reminder' : 'إضافة تذكير',
+      'edit_reminder' : 'تعديل تذكير',
+      'missed_reminder':'تذكير غائب'
     },
   };
 }

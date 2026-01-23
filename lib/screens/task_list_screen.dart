@@ -148,7 +148,8 @@ class TaskListScreen extends StatelessWidget {
                                 child: Icon(
                                   Icons.alarm,
                                   size: 18,
-                                  color: task.reminderAt!.isBefore(DateTime.now())
+                                  color:
+                                      task.reminderAt!.isBefore(DateTime.now())
                                       ? Colors.red
                                       : Colors.grey,
                                 ),
@@ -163,9 +164,9 @@ class TaskListScreen extends StatelessWidget {
                             if (task.reminderAt != null &&
                                 task.reminderAt!.isBefore(DateTime.now()) &&
                                 !task.isCompleted)
-                              const Text(
-                                'Missed reminder',
-                                style: TextStyle(
+                              Text(
+                                'missed_reminder'.tr,
+                                style: const TextStyle(
                                   color: Colors.red,
                                   fontSize: 12,
                                 ),
