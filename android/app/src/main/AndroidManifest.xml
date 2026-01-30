@@ -1,9 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
-        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="flutter_project">
+        android:label="Todo">
         <activity
             android:name=".MainActivity"
             android:exported="true"
