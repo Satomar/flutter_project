@@ -24,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
 
     if (_authController.isLoggedIn) {
-      Get.offAllNamed(AppRoutes.MAIN);
+      Get.offAllNamed(AppRoutes.main);
     } else {
-      Get.offAllNamed(AppRoutes.LOGIN);
+      Get.offAllNamed(AppRoutes.login);
     }
   }
 

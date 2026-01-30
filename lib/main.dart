@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         translations: AppTranslations(),
         locale: Get.find<LocaleController>().locale.value,
         fallbackLocale: const Locale('en', 'US'),
-        initialRoute: AppRoutes.SPLASH,
+        initialRoute: AppRoutes.splash,
         getPages: AppPages.pages,
       ),
     );

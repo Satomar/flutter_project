@@ -22,11 +22,11 @@ class CategoryListScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.category, size: 64, color: AppColors.iconSubtle),
+                  const Icon(Icons.category, size: 64, color: AppColors.iconSubtle),
                   const SizedBox(height: 16),
                   Text(
                     'no_categories'.tr,
-                    style: TextStyle(color: AppColors.textSubtleDark),
+                    style: const TextStyle(color: AppColors.textSubtleDark),
                   ),
                 ],
               ),

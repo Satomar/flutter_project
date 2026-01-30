@@ -102,7 +102,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                           color: AppColors.info,
                           size: 20,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
                           'add_new_category'.tr,
                           style: const TextStyle(

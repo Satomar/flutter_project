@@ -19,6 +19,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   late TextEditingController _nameController;
   final _formKey = GlobalKey<FormState>();
 
+  get categoryColors => AppColors.categoryColors;
+
   @override
   void initState() {
     super.initState();

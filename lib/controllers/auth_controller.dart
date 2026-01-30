@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -28,7 +29,9 @@ class AuthController extends GetxController {
       try {
         currentUser.value = UserModel.fromJson(jsonDecode(userJson));
       } catch (e) {
-        print('Error parsing user data: $e');
+        if (kDebugMode) {
+          print('Error parsing user data: $e');
+        }
       }
     }
   }
@@ -53,7 +56,7 @@ class AuthController extends GetxController {
           );
           currentUser.value = user;
 
-          Get.offAllNamed(AppRoutes.MAIN);
+          Get.offAllNamed(AppRoutes.main);
           Get.snackbar(
             'Success',
             'Logged in successfully',
@@ -80,7 +83,7 @@ class AuthController extends GetxController {
     await _settingsBox.delete(AppConstants.keyToken);
     await _settingsBox.delete(AppConstants.keyUser);
     currentUser.value = null;
-    Get.offAllNamed(AppRoutes.LOGIN);
+    Get.offAllNamed(AppRoutes.login);
   }
 
   bool get isLoggedIn => _settingsBox.get(AppConstants.keyToken) != null;

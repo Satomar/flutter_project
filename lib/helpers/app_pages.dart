@@ -12,16 +12,16 @@ import 'routes.dart';
 
 class AppPages {
   static final pages = [
-    GetPage(name: AppRoutes.SPLASH, page: () => const SplashScreen()),
+    GetPage(name: AppRoutes.splash, page: () => const SplashScreen()),
     GetPage(
-      name: AppRoutes.LOGIN,
+      name: AppRoutes.login,
       page: () => const LoginScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => AuthController());
       }),
     ),
     GetPage(
-      name: AppRoutes.MAIN,
+      name: AppRoutes.main,
       page: () => const MainScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => TaskController());
@@ -29,15 +29,15 @@ class AppPages {
       }),
     ),
     GetPage(
-      name: AppRoutes.TASKS,
-      page: () => TaskListScreen(),
+      name: AppRoutes.tasks,
+      page: () => const TaskListScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => TaskController());
         Get.lazyPut(() => CategoryController());
       }),
     ),
     GetPage(
-      name: AppRoutes.CATEGORIES,
+      name: AppRoutes.categories,
       page: () => const CategoryListScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => CategoryController());

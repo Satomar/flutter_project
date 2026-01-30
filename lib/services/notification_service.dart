@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../controllers/task_controller.dart';
 import '../helpers/routes.dart';
 
 class NotificationService {
@@ -25,7 +26,16 @@ class NotificationService {
     await _flutterLocalNotificationsPlugin.initialize(
       settings,
       onDidReceiveNotificationResponse: (details) {
-        Get.toNamed(AppRoutes.TASKS);
+        final payload = details.payload;
+        if (payload != null && payload.isNotEmpty) {
+          try {
+            final tc = Get.find<TaskController>();
+            tc.markComplete(payload);
+          } catch (_) {}
+        }
+        try {
+          Get.toNamed(AppRoutes.tasks);
+        } catch (_) {}
       },
     );
   }
@@ -35,12 +45,12 @@ class NotificationService {
     required String title,
     required String body,
     required DateTime scheduledDate,
+    String? payload,
   }) async {
     final now = DateTime.now();
     final scheduled = scheduledDate.isBefore(now)
         ? now.add(const Duration(seconds: 1))
         : scheduledDate;
-
     final tzDate = tz.TZDateTime.from(scheduled, tz.local);
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
@@ -58,6 +68,7 @@ class NotificationService {
         ),
         iOS: DarwinNotificationDetails(),
       ),
+      payload: payload,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
       androidScheduleMode: AndroidScheduleMode.exact,
     );
@@ -65,20 +76,5 @@ class NotificationService {
 
   Future<void> cancelNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id);
-  }
-
-  Future<void> snoozeNotification({
-    required int id,
-    required String title,
-    required String body,
-    required Duration duration,
-  }) async {
-    final scheduledDate = DateTime.now().add(duration);
-    await scheduleNotification(
-      id: id,
-      title: title,
-      body: body,
-      scheduledDate: scheduledDate,
-    );
   }
 }
